@@ -91,7 +91,7 @@ jQuery(document).ready(function ($) {
         post.subassigned.forEach( sub =>{
             html += `<li>
                 <a href="${window.lodash.escape(sub.permalink)}">${window.lodash.escape(sub.post_title)}</a>
-                <span>${window.lodash.escape(sub.meta.reason ? `(${sub.meta.reason})` : '')}</span>
+                <span>${window.lodash.escape(sub.meta?.reason ? `(${sub.meta.reason})` : '')}</span>
                 <span style="margin-bottom: 0" class="delete-subassigned" data-id="${window.lodash.escape(sub.ID)}">x</span>
             </li>`
         })
