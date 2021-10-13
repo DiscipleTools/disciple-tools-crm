@@ -30,7 +30,10 @@ jQuery(document).ready(function ($) {
                 },
                 callback: {
                     onClick: function (node, a, item) {
-                        console.log(item)
+                        this.addMultiselectItemLayout(item)
+                        event.preventDefault()
+                        this.hideLayout();
+                        this.resetInput();
                     },
                     onResult: function (node, query, result, resultCount) {
                         let text = TYPEAHEADS.typeaheadHelpText(resultCount, query, result)
