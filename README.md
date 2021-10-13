@@ -1,41 +1,25 @@
 [![Build Status](https://travis-ci.com/DiscipleTools/disciple-tools-crm.svg?branch=master)](https://travis-ci.com/DiscipleTools/disciple-tools-crm)
 
-## Dev notes, delete me:
-This is a starter plugin to jumstart your work with Disciple.Tools.
-Click the "Use this template" button above.
-See instructions for refactoring and getting started in the [wiki](https://github.com/DiscipleTools/disciple-tools-crm/wiki)
-See instruction for creating releases and publishing your plugin: [wiki](https://github.com/DiscipleTools/disciple-tools-crm/wiki)
-In order to display the banner correctly on the Disciple.Tools Community Plugins Site, don't change the 'Plugin Banner' text on line 12; only the URL.
-
 ## readme format:
 
 ![Plugin Banner](https://raw.githubusercontent.com/DiscipleTools/disciple-tools-crm/master/documentation/banner.png)
 
-# Disciple.Tools - Name
+# Disciple.Tools - CRM
 
-Description Description Description Description Description Description Description
-Description Description Description Description Description Description Description
+Let Disciple.Tools be used more as a traditional CRM than a Follow-Up system
 
 ## Purpose
 
-Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose
-Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose
-
-Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose
-Purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose purpose
+Provide Fields and Workflows more suited for a simple crm contact.
 
 ## Usage
 
 #### Will Do
 
-- Item
-- Item
-- Item
+- Adds CRM Contact Type
+- Upgrades Subassigned Fields with Reason
 
 #### Will Not Do
-
-- Item
-- Item
 
 ## Requirements
 

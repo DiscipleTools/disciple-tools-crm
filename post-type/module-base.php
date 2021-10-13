@@ -32,19 +32,15 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
 
         //setup tiles and fields
         add_filter( 'dt_custom_fields_settings', [ $this, 'dt_custom_fields_settings' ], 25, 2 );
-        add_filter( 'dt_details_additional_tiles', [ $this, 'dt_details_additional_tiles' ], 10, 2 );
-        add_action( 'dt_details_additional_section', [ $this, 'dt_details_additional_section' ], 20, 2 );
         add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ], 99 );
         add_action( 'dt_record_footer', [ $this, 'dt_record_footer' ], 10, 2 );
         add_action( 'dt_render_field_for_display_template', [ $this, 'dt_render_field_for_display_template' ], 20, 5 );
 
         // hooks
         add_action( "post_connection_removed", [ $this, "post_connection_removed" ], 10, 4 );
-        add_action( "post_connection_added", [ $this, "post_connection_added" ], 10, 4 );
         add_filter( "dt_post_update_fields", [ $this, "dt_post_update_fields" ], 10, 3 );
         add_filter( "dt_post_create_fields", [ $this, "dt_post_create_fields" ], 10, 2 );
         add_action( "dt_post_created", [ $this, "dt_post_created" ], 10, 3 );
-        add_action( "dt_comment_created", [ $this, "dt_comment_created" ], 10, 4 );
 
         //list
         add_filter( "dt_user_list_filters", [ $this, "dt_user_list_filters" ], 10, 2 );
@@ -162,22 +158,6 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         return $fields;
     }
 
-    /**
-     * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/field-and-tiles.md
-     */
-    public function dt_details_additional_tiles( $tiles, $post_type = "" ){
-        if ( $post_type === $this->post_type ){
-
-        }
-        return $tiles;
-    }
-
-    /**
-     * Documentation
-     * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/field-and-tiles.md#add-custom-content
-     */
-    public function dt_details_additional_section( $section, $post_type ){
-    }
 
     public function dt_render_field_for_display_template( $post, $field_type, $field_key, $required_tag, $display_field_id ){
         $contact_fields = DT_Posts::get_post_field_settings( "contacts" );
@@ -281,17 +261,6 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         <?php
     }
 
-    /**
-     * action when a post connection is added during create or update
-     *
-     * The next three functions are added, removed, and updated of the same field concept
-     */
-    public function post_connection_added( $post_type, $post_id, $field_key, $value ){
-        if ( $post_type === $this->post_type ){
-        }
-        if ( $post_type === "contacts" && $field_key === $this->post_type ){
-        }
-    }
 
     //action when a post connection is removed during create or update
     public function post_connection_removed( $post_type, $post_id, $field_key, $value ){
@@ -311,9 +280,6 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
     }
 
 
-    //filter when a comment is created
-    public function dt_comment_created( $post_type, $post_id, $comment_id, $type ){
-    }
 
     // filter at the start of post creation
     public function dt_post_create_fields( $fields, $post_type ){
