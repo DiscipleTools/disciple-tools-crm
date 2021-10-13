@@ -31,10 +31,12 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         add_filter( 'dt_set_roles_and_permissions', [ $this, 'dt_set_roles_and_permissions' ], 20, 1 ); //after contacts
 
         //setup tiles and fields
-        add_filter( 'dt_custom_fields_settings', [ $this, 'dt_custom_fields_settings' ], 10, 2 );
+        add_filter( 'dt_custom_fields_settings', [ $this, 'dt_custom_fields_settings' ], 25, 2 );
         add_filter( 'dt_details_additional_tiles', [ $this, 'dt_details_additional_tiles' ], 10, 2 );
         add_action( 'dt_details_additional_section', [ $this, 'dt_details_additional_section' ], 20, 2 );
         add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ], 99 );
+        add_action( 'dt_record_footer', [ $this, 'dt_record_footer' ], 10, 2 );
+        add_action( 'dt_render_field_for_display_template', [ $this, 'dt_render_field_for_display_template' ], 20, 5 );
 
         // hooks
         add_action( "post_connection_removed", [ $this, "post_connection_removed" ], 10, 4 );
@@ -76,6 +78,86 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
                     "order" => 70
                 ];
             }
+            if ( !isset( $fields["assigned_to"] ) ){
+                $fields['assigned_to'] = [
+                    'name' => __( 'Assigned To', 'disciple_tools' ),
+                    'description' => __( 'Select the main person who is responsible for reporting on this contact.', 'disciple_tools' ),
+                    'type' => 'user_select',
+                    'default' => '',
+                    'tile' => 'status',
+                    'icon' => get_template_directory_uri() . "/dt-assets/images/assigned-to.svg?v=2",
+                    "show_in_table" => 25,
+                    "custom_display" => true
+                ];
+            }
+            $fields["assigned_to"]["only_for_types"][] = "crm";
+
+            if ( !isset( $fields["sources"] ) ){
+                $sources_default = [
+                    'personal'           => [
+                        'label'       => __( 'Personal', 'disciple_tools' ),
+                        'key'         => 'personal',
+                    ],
+                    'web'           => [
+                        'label'       => __( 'Web', 'disciple_tools' ),
+                        'key'         => 'web',
+                    ],
+                    'facebook'      => [
+                        'label'       => __( 'Facebook', 'disciple_tools' ),
+                        'key'         => 'facebook',
+                    ],
+                    'twitter'       => [
+                        'label'       => __( 'Twitter', 'disciple_tools' ),
+                        'key'         => 'twitter',
+                    ],
+                    'transfer' => [
+                        'label'       => __( 'Transfer', 'disciple_tools' ),
+                        'key'         => 'transfer',
+                        'description' => __( 'Contacts transferred from a partnership with another Disciple.Tools site.', 'disciple_tools' ),
+                    ]
+                ];
+                foreach ( dt_get_option( 'dt_site_custom_lists' )['sources'] as $key => $value ) {
+                    if ( !isset( $sources_default[$key] ) ) {
+                        if ( isset( $value['enabled'] ) && $value["enabled"] === false ) {
+                            $value["deleted"] = true;
+                        }
+                        $sources_default[ $key ] = $value;
+                    }
+                }
+
+                $fields['sources'] = [
+                    'name'        => __( 'Sources', 'disciple_tools' ),
+                    'description' => _x( 'The website, event or location this contact came from.', 'Optional Documentation', 'disciple_tools' ),
+                    'type'        => 'multi_select',
+                    'default'     => $sources_default,
+                    'tile'     => 'details',
+                    'customizable' => 'all',
+                    'display' => "typeahead",
+                    'icon' => get_template_directory_uri() . "/dt-assets/images/source.svg?v=2",
+                ];
+            }
+            $fields["sources"]["only_for_types"][] = "crm";
+            $fields["sources"]["in_create_form"][] = "crm";
+
+            if ( !isset( $fields["subassigned"] ) ){
+                $fields["subassigned"] = [
+                    "name" => __( "Sub-assigned to", 'disciple_tools' ),
+                    "description" => __( "Contact or User assisting the Assigned To user to follow up with the contact.", 'disciple_tools' ),
+                    "type" => "connection",
+                    "post_type" => "contacts",
+                    "p2p_direction" => "to",
+                    "p2p_key" => "contacts_to_subassigned",
+                    "tile" => "status",
+                    'icon' => get_template_directory_uri() . "/dt-assets/images/subassigned.svg?v=2",
+                ];
+            }
+            $fields["subassigned"]["custom_display"] = true;
+            $fields["subassigned"]["meta_fields"] = [
+                'reason' => [
+                    'label' => "Reason"
+                ]
+            ];
+
         }
         return $fields;
     }
@@ -95,7 +177,82 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
      * @link https://github.com/DiscipleTools/Documentation/blob/master/Theme-Core/field-and-tiles.md#add-custom-content
      */
     public function dt_details_additional_section( $section, $post_type ){
+    }
 
+    public function dt_render_field_for_display_template( $post, $field_type, $field_key, $required_tag, $display_field_id ){
+        $contact_fields = DT_Posts::get_post_field_settings( "contacts" );
+        if ( isset( $post["post_type"] ) && $post["post_type"] === "contacts" && $field_key === "subassigned"
+            && isset( $contact_fields[$field_key] ) && !empty( $contact_fields[$field_key]["custom_display"] )
+            && empty( $contact_fields[$field_key]["hidden"] )
+        ){
+            if ( !dt_field_enabled_for_record_type( $contact_fields[$field_key], $post ) ){
+                return;
+            }
+            ?>
+            <div class="section-subheader">
+                    <img src="<?php echo esc_url( $contact_fields[$field_key]["icon"] ) ?>">
+                    <?php echo esc_html( $contact_fields[$field_key]["name"] ) ?>
+                </div>
+            <ul id="list-of-subassigned">
+                <!-- populated via js-->
+            </ul>
+            <button class="button tiny outlined loader" id="open-subassigned-modal">Add Subassigned</button>
+            <?php
+        }
+    }
+
+    public function dt_record_footer( $post_type, $post_id ){
+        if ( $post_type !== $this->post_type ){
+            return;
+        }
+        $field_settings = DT_Posts::get_post_field_settings( $post_type );
+        $post = DT_Posts::get_post( $this->post_type, $post_id );
+        ?>
+        <div class="reveal" id="reason-subassinged-modal" data-reveal data-close-on-click="false">
+
+            <h3>Subassign</h3>
+
+            <div>
+                <div class="section-subheader">
+                    <?php echo esc_html( $field_settings["subassigned"]["name"] )?>
+                </div>
+                <div class="">
+                    <var id="modal_subassigned-result-container" class="result-container modal_subassigned-result-container"></var>
+                    <div id="modal_subassigned_t" name="form-modal_subassigned" class="scrollable-typeahead typeahead-margin-when-active">
+                        <div class="typeahead__container">
+                            <div class="typeahead__field">
+                                <span class="typeahead__query">
+                                    <input class="js-typeahead-modal_subassigned input-height"
+                                           name="modal_subassigned[query]"
+                                           placeholder="<?php echo esc_html_x( "Search multipliers and contacts", 'input field placeholder', 'disciple_tools' ) ?>"
+                                           autocomplete="off">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <label>
+                    Task
+                    <input id="modal-reason-subassinged" type="text">
+                </label>
+
+            </div>
+
+
+            <div class="grid-x">
+                <button class="button" id="add-subassigned"><?php esc_html_e( 'Add Subassinged', 'disciple_tools' ); ?></button>
+                <button class="button clear" data-close type="button" id="close-baptism-modal">
+                    <?php echo esc_html__( 'Close', 'disciple_tools' )?>
+                </button>
+                <button class="close-button" data-close aria-label="Close modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+
+        <?php
     }
 
     /**
@@ -179,8 +336,9 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
     // scripts
     public function scripts(){
         if ( is_singular( $this->post_type ) && get_the_ID() && DT_Posts::can_view( $this->post_type, get_the_ID() ) ){
-            $test = "";
-            // @todo add enqueue scripts
+            wp_enqueue_script( 'dt_crm_scripts', plugin_dir_url( __FILE__ ) . 'crm.js', [
+                'jquery',
+            ], filemtime( plugin_dir_path( __FILE__ ) . '/crm.js' ), true );
         }
     }
 }

@@ -88,12 +88,6 @@ class Disciple_Tools_CRM {
         require_once( 'post-type/loader.php' ); // add starter post type extension to Disciple.Tools system
 
 
-        require_once( 'tile/custom-tile.php' ); // add custom tile
-        if ( 'settings' === dt_get_url_path() && ! $is_rest ) {
-            require_once( 'tile/settings-tile.php' ); // add custom settings page tile
-        }
-
-
         if ( is_admin() ) {
             require_once( 'admin/admin-menu-and-tabs.php' ); // adds starter admin page and section for plugin
         }
