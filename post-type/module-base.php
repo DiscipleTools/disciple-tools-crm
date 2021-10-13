@@ -192,11 +192,37 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
             <div class="section-subheader">
                     <img src="<?php echo esc_url( $contact_fields[$field_key]["icon"] ) ?>">
                     <?php echo esc_html( $contact_fields[$field_key]["name"] ) ?>
+                    <button class="button tiny outlined loader" style="margin-bottom: 2px; padding: 4px 9px; vertical-align: bottom" id="open-subassigned-modal">Add Item</button>
                 </div>
-            <ul id="list-of-subassigned">
+            <div id="list-of-subassigned">
                 <!-- populated via js-->
-            </ul>
-            <button class="button tiny outlined loader" id="open-subassigned-modal">Add Subassigned</button>
+            </div>
+
+
+            <style>
+                #list-of-subassigned {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+                #list-of-subassigned .connection-item{
+                    color:#3f729b; margin-bottom: 2px;font-size: 0.875rem;
+                    border:1px solid #c2e0ff; background: #ecf5fc; padding-left: 4px; display: inline-flex;
+                    margin-right: 2px;
+
+                }
+                #list-of-subassigned .connection-item >* {
+                    align-self:center
+                }
+                #list-of-subassigned .connection-item .delete-subassigned {
+                    padding: 2px 6px; border-left:1px solid #c2e0ff; cursor: pointer; margin-left: 6px
+                }
+                #list-of-subassigned .connection-item .delete-subassigned:hover {
+                    color: red;
+                }
+                #list-of-subassigned .connection-item .connection-meta {
+                    margin-left: 2px
+                }
+            </style>
             <?php
         }
     }

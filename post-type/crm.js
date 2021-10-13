@@ -89,11 +89,11 @@ jQuery(document).ready(function ($) {
     let display_list_of_subassigned = ()=>{
         let html = ``
         post.subassigned.forEach( sub =>{
-            html += `<li>
-                <a href="${window.lodash.escape(sub.permalink)}">${window.lodash.escape(sub.post_title)}</a>
-                <span>${window.lodash.escape(sub.meta?.reason ? `(${sub.meta.reason})` : '')}</span>
-                <span style="margin-bottom: 0" class="delete-subassigned" data-id="${window.lodash.escape(sub.ID)}">x</span>
-            </li>`
+            html += `<div class="connection-item">
+                <a  href="${window.lodash.escape(sub.permalink)}">${window.lodash.escape(sub.post_title)}</a>
+                <span class="connection-meta">${window.lodash.escape(sub.meta?.reason ? ` (${sub.meta.reason})` : '')}</span>
+                <span class="delete-subassigned" data-id="${window.lodash.escape(sub.ID)}">x</span>
+            </div>`
         })
         $("#list-of-subassigned").html(html)
     }
