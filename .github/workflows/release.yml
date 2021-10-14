@@ -23,7 +23,7 @@ jobs:
       - name: Build project
         run: |
           mkdir disciple-tools-crm
-          cp -r disciple-tools-crm.php admin charts languages magic-link post-type rest-api site-link tile spinner.svg version-control.json LICENSE SECURITY.md disciple-tools-crm/
+          cp -r disciple-tools-crm.php admin languages post-type rest-api version-control.json LICENSE SECURITY.md disciple-tools-crm/
           zip -r disciple-tools-crm.zip disciple-tools-crm
       - name: Create Release
         id: create_release
