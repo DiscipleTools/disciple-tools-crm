@@ -98,6 +98,9 @@ jQuery(document).ready(function ($) {
                 <span class="delete-subassigned" data-id="${window.lodash.escape(sub.ID)}">x</span>
             </div>`
         })
+        if ( !html.length ){
+            html = `<ul class="none-set"><li>No Subassigned</li></ul>`
+        }
         $("#list-of-subassigned").html(html)
     }
     display_list_of_subassigned()

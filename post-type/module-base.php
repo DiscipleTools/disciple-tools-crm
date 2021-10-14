@@ -183,24 +183,31 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
                 #list-of-subassigned {
                     display: flex;
                     flex-wrap: wrap;
+                    font-size: 0.875rem;
                 }
                 #list-of-subassigned .connection-item{
-                    color:#3f729b; margin-bottom: 2px;font-size: 0.875rem;
-                    border:1px solid #c2e0ff; background: #ecf5fc; padding-left: 4px; display: inline-flex;
-                    margin-right: 2px;
-
+                    color:#3f729b;
+                    margin-bottom: 2px; margin-right: 2px; padding-left: 4px;
+                    border:1px solid #c2e0ff;
+                    background: #ecf5fc;
+                    display: inline-flex;
                 }
                 #list-of-subassigned .connection-item >* {
-                    align-self:center
+                    align-self:center;
                 }
                 #list-of-subassigned .connection-item .delete-subassigned {
-                    padding: 2px 6px; border-left:1px solid #c2e0ff; cursor: pointer; margin-left: 6px
+                    padding: 2px 6px; margin-left: 6px;
+                    border-left:1px solid #c2e0ff;
+                    cursor: pointer;
                 }
                 #list-of-subassigned .connection-item .delete-subassigned:hover {
                     color: red;
                 }
                 #list-of-subassigned .connection-item .connection-meta {
-                    margin-left: 2px
+                    margin-left: 2px;
+                }
+                #list-of-subassigned .none-set {
+                    color: grey;
                 }
             </style>
             <?php
