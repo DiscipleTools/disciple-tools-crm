@@ -1,5 +1,5 @@
 {
-  "name": "Disciple.Tools - CRM Plugin",
+  "name": "Disciple.Tools - CRM",
   "version": "0.1",
   "last_updated": "2021-03",
   "author": "Disciple.Tools",
@@ -23,7 +23,7 @@
   },
   "icon": "https://raw.githubusercontent.com/DiscipleTools/disciple-tools-crm/master/documentation/icon.png",
   "sections": {
-    "description": "Kick start your Disciple.Tools plugin project with this template! This plugin is a collection of our best practices and code bases for creating Disciple.Tools plugins. ",
+    "description": "Upgrade you Disciple.Tools experience with a CRM contact type.",
     "installation": "(Required) You must have Disciple.Tools Theme installed before using this plugin. Once Disciple.Tools is installed, you can use the normal Plugin system to install the plugin.",
     "changelog": ""
   }
