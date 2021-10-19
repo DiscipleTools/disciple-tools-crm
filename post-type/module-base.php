@@ -31,7 +31,7 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         add_filter( 'dt_set_roles_and_permissions', [ $this, 'dt_set_roles_and_permissions' ], 20, 1 ); //after contacts
 
         //setup tiles and fields
-        add_filter( 'dt_custom_fields_settings', [ $this, 'dt_custom_fields_settings' ], 25, 2 );
+        add_filter( 'dt_custom_fields_settings', [ $this, 'dt_custom_fields_settings' ], 150, 2 );
         add_action( 'wp_enqueue_scripts', [ $this, 'scripts' ], 99 );
         add_action( 'dt_record_footer', [ $this, 'dt_record_footer' ], 10, 2 );
         add_action( 'dt_render_field_for_display_template', [ $this, 'dt_render_field_for_display_template' ], 20, 5 );
@@ -71,7 +71,7 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
                     "color" => "#9b379b",
                     "description" => __( "Collaborative Contact", 'disciple_tools' ),
                     "visibility" => __( "Everyone", 'disciple_tools' ),
-                    "order" => 70
+                    "order" => 5
                 ];
             }
             if ( !isset( $fields["assigned_to"] ) ){
@@ -148,11 +148,23 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
                 ];
             }
             $fields["subassigned"]["custom_display"] = true;
+            $fields["subassigned"]["show_in_table"] = true;
             $fields["subassigned"]["meta_fields"] = [
                 'reason' => [
                     'label' => "Reason"
                 ]
             ];
+
+            $fields["faith_status"]["hidden"] = true;
+            $fields["contact_email"]["in_create_form"] = true;
+            if ( isset( $fields["seeker_path"] ) ){
+                $fields["seeker_path"]["show_in_table"] = false;
+            }
+            if ( isset( $fields["milestones"] ) ){
+                $fields["milestones"]["show_in_table"] = false;
+            }
+            $fields["last_modified"]["show_in_table"] = false;
+
 
         }
         return $fields;
