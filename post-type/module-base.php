@@ -39,7 +39,7 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         // hooks
         add_action( "post_connection_removed", [ $this, "post_connection_removed" ], 10, 4 );
         add_filter( "dt_post_update_fields", [ $this, "dt_post_update_fields" ], 10, 3 );
-        add_filter( "dt_post_create_fields", [ $this, "dt_post_create_fields" ], 10, 2 );
+        add_filter( "dt_post_create_fields", [ $this, "dt_post_create_fields" ], 5, 2 );
         add_action( "dt_post_created", [ $this, "dt_post_created" ], 10, 3 );
 
         //list
@@ -302,6 +302,9 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
 
     // filter at the start of post creation
     public function dt_post_create_fields( $fields, $post_type ){
+        if ( $post_type === $this->post_type && !isset( $fields["type"] ) ){
+            $fields["type"] = "crm";
+        }
         return $fields;
     }
 
