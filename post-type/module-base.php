@@ -29,6 +29,8 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
 
         //setup post type
         add_filter( 'dt_set_roles_and_permissions', [ $this, 'dt_set_roles_and_permissions' ], 20, 1 ); //after contacts
+        add_filter( 'dt_duplicates_find_types', [ $this, 'dt_duplicates_find_types' ], 20, 1 ); //after contacts
+
 
         //setup tiles and fields
         add_filter( 'dt_custom_fields_settings', [ $this, 'dt_custom_fields_settings' ], 150, 2 );
@@ -354,6 +356,11 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
                 'jquery',
             ], filemtime( plugin_dir_path( __FILE__ ) . '/crm.js' ), true );
         }
+    }
+
+    public function dt_duplicates_find_types( $types ){
+        $types[] = "crm";
+        return $types;
     }
 }
 
