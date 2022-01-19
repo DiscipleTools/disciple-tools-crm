@@ -73,8 +73,12 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
                     "color" => "#9b379b",
                     "description" => __( "Collaborative Contact", 'disciple_tools' ),
                     "visibility" => __( "Everyone", 'disciple_tools' ),
-                    "order" => 5
+                    "order" => 5,
+                    "default" => true
                 ];
+                if ( isset( $fields["type"]["default"]["access"] ) ){
+                    $fields["type"]["default"]["access"]["default"] = false;
+                }
             }
             if ( !isset( $fields["assigned_to"] ) ){
                 $fields['assigned_to'] = [
