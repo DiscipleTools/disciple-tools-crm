@@ -49,6 +49,7 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         add_filter( "dt_filter_access_permissions", [ $this, "dt_filter_access_permissions" ], 20, 2 );
         add_filter( "dt_can_view_permission", [ $this, 'can_view_permission_filter' ], 10, 3 );
         add_filter( "dt_can_update_permission", [ $this, 'can_update_permission_filter' ], 10, 3 );
+        add_filter( 'dt_can_delete_permission', [ $this, 'dt_can_delete_permission' ], 20, 3 );
 
     }
 
@@ -58,6 +59,7 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
      */
     public function dt_set_roles_and_permissions( $expected_roles ){
 
+        $expected_roles["administrator"]["permissions"]["delete_contacts"] = true;
         return $expected_roles;
     }
 
@@ -337,7 +339,8 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
     // filter for access to a specific record
     public function can_view_permission_filter( $has_permission, $post_id, $post_type ){
         if ( $post_type === $this->post_type ){
-            if ( DT_Posts::can_access( $post_type ) ){
+            $contact_type = get_post_meta( $post_id, "type", true );
+            if ( in_array( $contact_type, [ 'crm', 'access', 'access_placeholder' ], true ) ){
                 return true;
             }
         }
@@ -345,11 +348,23 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
     }
     public function can_update_permission_filter( $has_permission, $post_id, $post_type ){
         if ( $post_type === $this->post_type ){
-            if ( DT_Posts::can_access( $post_type ) ){
+            $contact_type = get_post_meta( $post_id, "type", true );
+            if ( in_array( $contact_type, [ 'crm', 'access', 'access_placeholder' ], true ) ){
                 return true;
             }
         }
         return $has_permission;
+    }
+
+    public function dt_can_delete_permission( $can_delete, $post_id, $post_type ){
+        //allow administrators to delete more contacts
+        if ( $post_type === $this->post_type && current_user_can( "delete_" . $post_type ) ){
+            $contact_type = get_post_meta( $post_id, "type", true );
+            if ( in_array( $contact_type, [ 'crm', 'access', 'access_placeholder' ], true ) ){
+                return true;
+            }
+        }
+        return $can_delete;
     }
 
 
