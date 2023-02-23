@@ -91,10 +91,11 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
                     'tile' => 'status',
                     'icon' => get_template_directory_uri() . "/dt-assets/images/assigned-to.svg?v=2",
                     "show_in_table" => 25,
-                    "custom_display" => true
+
                 ];
             }
-            $fields["assigned_to"]["only_for_types"][] = "crm";
+//            $fields["assigned_to"]["only_for_types"][] = "crm";
+
 
             if ( !isset( $fields["sources"] ) ){
                 $sources_default = [
@@ -163,7 +164,9 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
                 ]
             ];
 
-            $fields["faith_status"]["hidden"] = true;
+            if ( isset( $fields['faith_status'] ) ){
+                $fields["faith_status"]["hidden"] = true;
+            }
             $fields["contact_email"]["in_create_form"] = true;
             if ( isset( $fields["seeker_path"] ) ){
                 $fields["seeker_path"]["show_in_table"] = false;
