@@ -117,7 +117,7 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
             $fields['overall_status'] = [
                 'name'        => __( 'Contact Status', 'disciple_tools' ),
                 'type'        => 'key_select',
-                'default_color' => '#366184',
+                'default_color' => '#eeeeee',
                 'default'     => array_merge( [
                     'new'   => [
                         'label' => __( 'New Contact', 'disciple_tools' ),
@@ -402,6 +402,9 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         if ( $post_type !== 'contacts' ){
             return $filters;
         }
+        $filters = DT_Contacts_Access::dt_user_list_filters( $filters, $post_type );
+
+
         $fields = DT_Posts::get_post_field_settings( $post_type );
         if ( true ){
             $records_by_source_counts = self::count_records_by_source();
