@@ -14,13 +14,13 @@ if ( ! class_exists( 'DT_Module_Base' ) ) {
  */
 add_filter( 'dt_post_type_modules', function( $modules ){
 
-    $modules["crm"] = [
-        "name" => "CRM",
-        "enabled" => true,
-        "locked" => false,
-        "prerequisites" => [ "contacts_base" ],
-        "post_type" => "contacts",
-        "description" => "CRM Contact Type"
+    $modules['crm'] = [
+        'name' => 'CRM',
+        'enabled' => true,
+        'locked' => false,
+        'prerequisites' => [ 'contacts_base' ],
+        'post_type' => 'contacts',
+        'description' => 'CRM Contact Type'
     ];
 
     return $modules;
