@@ -51,6 +51,8 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         add_filter( 'dt_can_update_permission', [ $this, 'can_update_permission_filter' ], 10, 3 );
         add_filter( 'dt_can_delete_permission', [ $this, 'dt_can_delete_permission' ], 20, 3 );
 
+        add_filter( 'dt_get_viewable_compact_search_query', [ $this, 'dt_get_viewable_compact_search_query' ], 10, 4 );
+
     }
 
     /**
@@ -513,6 +515,16 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         $types[] = 'crm';
         return $types;
     }
+
+    public function dt_get_viewable_compact_search_query( $query, $post_type, $search_string, $args ){
+        if ( $post_type === 'contacts' ){
+            $query[] = [
+                'overall_status' => [ '-closed' ],
+            ];
+        }
+        return $query;
+    }
+
 }
 
 
