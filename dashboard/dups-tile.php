@@ -23,9 +23,10 @@ class Your_Custom_Tile extends DT_Dashboard_Tile
             SELECT p.post_title, p.ID, pm.meta_value, pm.post_id, GROUP_CONCAT(pm.meta_value) as emails, GROUP_CONCAT(pm.post_id) as ids
             FROM $wpdb->postmeta pm
             INNER JOIN $wpdb->posts p ON p.ID = pm.post_id
+            LEFT JOIN $wpdb->postmeta pm2 ON ( pm2.post_id = pm.post_id AND pm2.meta_key = 'overall_status' )
             WHERE p.post_type = 'contacts' 
             AND pm.meta_key like 'contact_email%'
-           
+            AND pm2.meta_value != 'closed'
             AND pm.meta_key not like 'contact_email%_details'
             AND pm.meta_value != ''
             GROUP BY pm.meta_value
