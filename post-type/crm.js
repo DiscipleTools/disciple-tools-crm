@@ -1,6 +1,8 @@
 "use strict";
 jQuery(document).ready(function ($) {
     let post = window.detailsSettings.post_fields
+    let post_type = window.detailsSettings.post_type
+    let post_id = window.detailsSettings.post_id
     /**
      * detect if an update is made on the subassigned field.
      */
