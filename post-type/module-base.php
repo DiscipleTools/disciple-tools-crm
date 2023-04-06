@@ -39,6 +39,7 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         add_action( 'dt_render_field_for_display_template', [ $this, 'dt_render_field_for_display_template' ], 20, 5 );
 
         // hooks
+        add_action( 'post_connection_added', [ $this, 'post_connection_added' ], 10, 4 );
         add_action( 'post_connection_removed', [ $this, 'post_connection_removed' ], 10, 4 );
         add_filter( 'dt_post_update_fields', [ $this, 'dt_post_update_fields' ], 10, 3 );
         add_filter( 'dt_post_create_fields', [ $this, 'dt_post_create_fields' ], 5, 2 );
@@ -357,6 +358,17 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
         if ( $post_type === $this->post_type ){
             // execute your code here, if connection removed
             dt_write_log( __METHOD__ );
+        }
+    }
+    public function post_connection_added( $post_type, $post_id, $post_key, $value ){
+        if ( $post_type === 'contacts' ){
+            if ( $post_key === 'subassigned' ){
+                $user_id = get_post_meta( $value, 'corresponds_to_user', true );
+                if ( $user_id ){
+                    DT_Posts::add_shared( $post_type, $post_id, $user_id, null, false, false, false );
+                    Disciple_Tools_Notifications::insert_notification_for_subassigned( $user_id, $post_id );
+                }
+            }
         }
     }
 
