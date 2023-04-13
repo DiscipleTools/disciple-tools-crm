@@ -1,11 +1,11 @@
 <?php
 /**
- *Plugin Name: Disciple.Tools - CRM Plugin
+ * Plugin Name: Disciple.Tools - CRM Plugin
  * Plugin URI: https://github.com/DiscipleTools/disciple-tools-crm
  * Description: Disciple.Tools - CRM Plugin is intended to help developers and integrator jumpstart their extension of the Disciple.Tools system.
  * Text Domain: disciple-tools-crm
  * Domain Path: /languages
- * Version:  0.1
+ * Version:  1.0
  * Author URI: https://github.com/DiscipleTools
  * GitHub Plugin URI: https://github.com/DiscipleTools/disciple-tools-crm
  * Requires at least: 4.7.0
