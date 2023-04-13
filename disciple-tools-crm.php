@@ -91,8 +91,6 @@ class Disciple_Tools_CRM {
             require_once( 'admin/admin-menu-and-tabs.php' ); // adds starter admin page and section for plugin
         }
 
-        $this->i18n();
-
         /**
          * @todo Decide if you want to customize links for your plugin in the plugin admin area
          * To remove: delete the lines below and remove the function named
