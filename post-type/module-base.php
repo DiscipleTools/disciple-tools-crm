@@ -205,6 +205,18 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
             $fields['sources']['only_for_types'][] = 'crm';
             $fields['sources']['in_create_form'][] = 'crm';
 
+            if ( !isset( $fields['campaigns'] ) ){
+                $fields['campaigns'] = [
+                    'name' => __( 'Campaigns', 'disciple_tools' ),
+                    'description' => _x( 'Marketing campaigns or access activities that this contact interacted with.', 'Optional Documentation', 'disciple_tools' ),
+                    'tile' => 'details',
+                    'type'        => 'tags',
+                    'default'     => [],
+                    'icon' => get_template_directory_uri() . '/dt-assets/images/megaphone.svg?v=2',
+                ];
+            }
+
+
             if ( !isset( $fields['subassigned'] ) ){
                 $fields['subassigned'] = [
                     'name' => __( 'Sub-assigned to', 'disciple_tools' ),
