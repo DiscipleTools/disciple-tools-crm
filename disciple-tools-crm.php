@@ -2,9 +2,8 @@
 /**
  * Plugin Name: Disciple.Tools - CRM Plugin
  * Plugin URI: https://github.com/DiscipleTools/disciple-tools-crm
- * Description: Disciple.Tools - CRM Plugin is intended to help developers and integrator jumpstart their extension of the Disciple.Tools system.
+ * Description: Turn D.T into a CRM
  * Text Domain: disciple-tools-crm
- * Domain Path: /languages
  * Version:  1.0
  * Author URI: https://github.com/DiscipleTools
  * GitHub Plugin URI: https://github.com/DiscipleTools/disciple-tools-crm
