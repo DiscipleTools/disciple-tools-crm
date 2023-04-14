@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/DiscipleTools/disciple-tools-crm
  * Description: Turn D.T into a CRM
  * Text Domain: disciple-tools-crm
- * Version:  2023-04-14
+ * Version: 2023.04.14
  * Author URI: https://github.com/DiscipleTools
  * GitHub Plugin URI: https://github.com/DiscipleTools/disciple-tools-crm
  * Requires at least: 4.7.0
