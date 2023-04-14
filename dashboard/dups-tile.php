@@ -3,7 +3,7 @@
 /**
 * Your custom tile class
  */
-class Your_Custom_Tile extends DT_Dashboard_Tile
+class Dups_Tile extends DT_Dashboard_Tile
 {
 
     /**
@@ -93,9 +93,9 @@ class Your_Custom_Tile extends DT_Dashboard_Tile
 * Next, register our class. This can be done in the after_setup_theme hook.
 */
 DT_Dashboard_Plugin_Tiles::instance()->register(
-    new Your_Custom_Tile(
-        'Your_Custom_Tile',                     //handle
-        __( 'Custom Tile Label', 'your-plugin' ), //label
+    new Dups_Tile(
+        'dups_tile',                     //handle
+        __( 'Email Management', 'your-plugin' ), //label
         [
             'priority' => 3,
             'span' => 1

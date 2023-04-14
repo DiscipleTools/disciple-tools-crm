@@ -1,6 +1,7 @@
 <?php
 
 require_once( 'dups-tile.php' );
+require_once( 'contacts-tile.php' );
 
 add_filter( 'dt_dashboard_tiles', function ( $tiles ) {
     if ( isset( $tiles['DT_Dashboard_Plugin_Active_Contact'] ) ) {
