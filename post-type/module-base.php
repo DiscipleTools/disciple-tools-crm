@@ -164,18 +164,6 @@ class Disciple_Tools_CRM_Base extends DT_Module_Base {
                         'label'       => __( 'Personal', 'disciple_tools' ),
                         'key'         => 'personal',
                     ],
-                    'web'           => [
-                        'label'       => __( 'Web', 'disciple_tools' ),
-                        'key'         => 'web',
-                    ],
-                    'facebook'      => [
-                        'label'       => __( 'Facebook', 'disciple_tools' ),
-                        'key'         => 'facebook',
-                    ],
-                    'twitter'       => [
-                        'label'       => __( 'Twitter', 'disciple_tools' ),
-                        'key'         => 'twitter',
-                    ],
                     'transfer' => [
                         'label'       => __( 'Transfer', 'disciple_tools' ),
                         'key'         => 'transfer',
