@@ -6,6 +6,7 @@
  * Text Domain: disciple-tools-crm
  * Domain Path: /languages
  * Version: 2023.04.14.1
+ * Author name: Disciple.Tools
  * Author URI: https://github.com/DiscipleTools
  * GitHub Plugin URI: https://github.com/DiscipleTools/disciple-tools-crm
  * Requires at least: 4.7.0
