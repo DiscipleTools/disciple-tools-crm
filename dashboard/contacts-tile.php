@@ -31,6 +31,15 @@ class Contacts_Tile extends DT_Dashboard_Tile
         ], true );
 
         ?>
+        <style>
+            .dash-tile {
+                display: block !important;
+            }
+            .tile-row {
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        </style>
         <div class='tile-header'>
            Contacts
         </div>
